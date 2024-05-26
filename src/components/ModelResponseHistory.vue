@@ -2,7 +2,7 @@
   <div class="model-dialogue">
     <img src="@/assets/img/ai-avatar.png" alt="Ai Avatar" class="avatar">
     <div class="model-response-history">
-      <div>大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史大模型回答历史</div>
+      <div>{{ response }}</div>
     </div>
   </div>
 </template>
@@ -10,6 +10,9 @@
 <script>
 export default {
   name: 'ModelResponseHistory',
+  props: {
+    response: String
+  }
 };
 </script>
 

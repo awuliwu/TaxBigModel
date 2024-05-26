@@ -2,7 +2,7 @@
   <div className="user-dialogue">
     <div className="user-input-history">
       <div>
-        用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史 用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史用户输入历史
+        {{ input }}
       </div>
     </div>
     <img src="@/assets/img/user-avatar.png" alt="User Avatar" className="avatar">
@@ -12,6 +12,9 @@
 <script>
 export default {
   name: 'UserInputHistory',
+  props: {
+    input: String
+  }
 };
 </script>
 

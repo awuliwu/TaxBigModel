@@ -1,20 +1,28 @@
 <template>
-  <div className="main-content">
-    <div className="history">
-      <user-input-history></user-input-history>
-      <br>
-      <model-response-history></model-response-history>
+  <div class="main-content">
+    <div class="history">
+      <div v-if="showGreeting" class="greeting">
+        <div class="greeting_words" ref="greetingWords">
+          欢迎使用复旦大学税务大模型系统!
+        </div>
+      </div>
+      <div v-for="(item, index) in history" :key="index">
+        <user-input-history v-if="item.role === 'user'" :input="item.content"></user-input-history>
+        <model-response-history v-else :response="item.content"></model-response-history>
+        <br>
+      </div>
     </div>
-    <div className="input-area">
+    <div class="input-area">
       <form @submit.prevent="sendMessage" class="input-form">
-        <input type="text" v-model="userInput" placeholder="请输入对话内容，换行请使用shift*enter，输入help查看自定义命令" className="message-input">
-        <button type="submit" className="send-button">&#10148;</button> <!-- 使用右箭头符号作为发送按钮 -->
+        <input type="text" v-model="userInput" placeholder="请输入对话内容，换行请使用shift*enter，输入help查看自定义命令" class="message-input">
+        <button type="submit" class="send-button">&#10148;</button> <!-- 使用右箭头符号作为发送按钮 -->
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import axios from 'axios';
 import UserInputHistory from './UserInputHistory.vue';
 import ModelResponseHistory from './ModelResponseHistory.vue';
 
@@ -26,13 +34,60 @@ export default {
   },
   data() {
     return {
-      userInput: ''
+      userInput: '',
+      history: [],
+      showGreeting: true,
     };
   },
+  mounted() {
+    this.typeWriter();
+  },
+
   methods: {
-    sendMessage() {
-      console.log("发送的消息:", this.userInput); // 示例：在此处可以加入实际的发送逻辑
-      this.userInput = ''; // 清空输入框
+    async sendMessage() {
+      if (this.userInput.trim() !== '') {
+        const userMessage = { role: 'user', content: this.userInput };
+        this.history.push(userMessage); // 添加用户输入到历史记录
+        this.showGreeting = false; // 隐藏欢迎词
+
+        const payload = {
+          query: this.userInput,
+          conversation_id: "",
+          history_len: this.history.length,
+          history: this.history,
+          stream: false,
+          model_name: "chatglm3-6b",
+          temperature: 0.7,
+          max_tokens: 0,
+          prompt_name: "default"
+        };
+
+        try {
+          const response = await axios.post('http://10.176.64.81:7861/chat/chat', payload);
+          const modelResponse = { role: 'assistant', content: response.data.content };
+          this.history.push(modelResponse); // 添加大模型回复到历史记录
+        } catch (error) {
+          console.error("Error sending message:", error);
+        }
+
+        this.userInput = ''; // 清空输入框
+      }
+    },
+    typeWriter() {
+      const element = this.$refs.greetingWords;
+      const text = element.innerText;
+      element.innerText = '';
+      let i = 0;
+
+      const type = () => {
+        if (i < text.length) {
+          element.innerText += text.charAt(i);
+          i++;
+          setTimeout(type, 100); // 调整此值以加快或减慢打字速度
+        }
+      };
+
+      type();
     }
   }
 };
@@ -42,7 +97,6 @@ export default {
 .main-content {
   flex: 1;
   padding: 20px;
-  color: white;
   display: flex;
   flex-direction: column;
   background-color: #222; /* 暗色背景 */
@@ -86,5 +140,27 @@ export default {
 
 .send-button:hover {
   background-color: #555;
+}
+
+.greeting {
+  margin-top: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* 确保greeting区填满整个历史区高度 */
+  width: 100%; /* 确保greeting区填满整个历史区宽度 */
+}
+
+.greeting_words {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  width: 700px;
+  border: 1px solid #555;
+  border-radius: 15px; /* 添加圆角 */
+  background-color: #333; /* 轻色背景增加对比 */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影提升立体感 */
+  font-size: 24px;
 }
 </style>
