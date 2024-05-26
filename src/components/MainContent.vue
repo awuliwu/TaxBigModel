@@ -62,15 +62,29 @@ export default {
           prompt_name: "default"
         };
 
+        this.userInput = ''; // 清空输入框
+
         try {
-          const response = await axios.post('http://10.176.64.81:7861/chat/chat', payload);
-          const modelResponse = { role: 'assistant', content: response.data.content };
-          this.history.push(modelResponse); // 添加大模型回复到历史记录
+          const response = await axios.post('http://10.176.64.81:7861/chat/chat', payload, {
+            responseType: 'text'
+          });
+
+          const eventData = response.data.trim().substring(5); // 去掉前缀 "data: "
+          const jsonResponse = JSON.parse(eventData); // 解析JSON
+
+          console.log(jsonResponse); // 检查解析后的数据结构
+          if (jsonResponse && jsonResponse.text) {
+            const modelResponseText = jsonResponse.text;
+            console.log("Model Response Text:", modelResponseText); // 检查 text 字段
+            const modelResponse = { role: 'assistant', content: modelResponseText };
+            this.history.push(modelResponse); // 添加大模型回复到历史记录
+          } else {
+            console.error("Parsed response data is missing 'text' field:", jsonResponse);
+          }
         } catch (error) {
           console.error("Error sending message:", error);
         }
 
-        this.userInput = ''; // 清空输入框
       }
     },
     typeWriter() {
@@ -100,6 +114,8 @@ export default {
   display: flex;
   flex-direction: column;
   background-color: #222; /* 暗色背景 */
+  height: 100vh;
+  overflow: auto;
 }
 
 .history {

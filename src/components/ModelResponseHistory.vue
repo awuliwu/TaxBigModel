@@ -1,7 +1,7 @@
 <template>
   <div class="model-dialogue">
     <img src="@/assets/img/ai-avatar.png" alt="Ai Avatar" class="avatar">
-    <div class="model-response-history">
+    <div class="model-response-history" ref="responseText">
       <div>{{ response }}</div>
     </div>
   </div>
@@ -12,6 +12,27 @@ export default {
   name: 'ModelResponseHistory',
   props: {
     response: String
+  },
+  mounted() {
+    this.typeWriter();
+  },
+  methods: {
+    typeWriter() {
+      const element = this.$refs.responseText;
+      const text = this.response;
+      element.innerText = '';
+      let i = 0;
+
+      const type = () => {
+        if (i < text.length) {
+          element.innerHTML += text.charAt(i);
+          i++;
+          setTimeout(type, 10); // 调整此值以加快或减慢打字速度
+        }
+      };
+
+      type();
+    }
   }
 };
 </script>

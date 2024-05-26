@@ -7,31 +7,31 @@
       <font-awesome-icon icon="book" /> 知识库管理
     </router-link>
 
-    <div class="menu-select">
-      <label for="dialogue-mode">请选择对话模式：</label>
-      <select id="dialogue-mode" v-model="selectedDialogueMode">
-        <option value="default">default</option>
-        <option value="other">其他选项</option>
-      </select>
-    </div>
-    <div class="menu-select">
-      <label for="llm-model">请选择 LLM 模型：</label>
-      <select id="llm-model" v-model="selectedLLMModel">
-        <option value="LLM模型">LLM模型</option>
-        <option value="Llama3-8B">Llama3-8B-chat-chinese-v2</option>
-      </select>
-    </div>
-    <div class="menu-slider">
-      <label for="temperature">Temperature:</label>
-      <div class="slider-container">
-        <span class="min-max">0.00</span>
-        <span class="min-max">2.00</span>
-        <br>
-        <input type="range" id="temperature" min="0" max="2" step="0.01" v-model="temperature" @input="updateTemperature">
+<!--    <div class="menu-select">-->
+<!--      <label for="dialogue-mode">请选择对话模式：</label>-->
+<!--      <select id="dialogue-mode" v-model="selectedDialogueMode">-->
+<!--        <option value="default">default</option>-->
+<!--        <option value="other">其他选项</option>-->
+<!--      </select>-->
+<!--    </div>-->
+<!--    <div class="menu-select">-->
+<!--      <label for="llm-model">请选择 LLM 模型：</label>-->
+<!--      <select id="llm-model" v-model="selectedLLMModel">-->
+<!--        <option value="LLM模型">LLM模型</option>-->
+<!--        <option value="Llama3-8B">Llama3-8B-chat-chinese-v2</option>-->
+<!--      </select>-->
+<!--    </div>-->
+<!--    <div class="menu-slider">-->
+<!--      <label for="temperature">Temperature:</label>-->
+<!--      <div class="slider-container">-->
+<!--        <span class="min-max">0.00</span>-->
+<!--        <span class="min-max">2.00</span>-->
+<!--        <br>-->
+<!--        <input type="range" id="temperature" min="0" max="2" step="0.01" v-model="temperature" @input="updateTemperature">-->
 
-        <div class="current-value">{{ temperature }}</div>
-      </div>
-    </div>
+<!--        <div class="current-value">{{ temperature }}</div>-->
+<!--      </div>-->
+<!--    </div>-->
   </aside>
 </template>
 
@@ -72,6 +72,8 @@ export default {
   display: flex;
   flex-direction: column;
   color: white;
+  height: 100vh;
+  overflow: auto;
 }
 
 .menu-button, .menu-select, .menu-slider {
