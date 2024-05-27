@@ -30,13 +30,13 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background-color: #333;
+  background-color: transparent;
   color: white;
 }
 
 .logo img {
-  height: auto; /* 或根据您的具体需求调整高度和宽度 */
-  width: 200px; /* 保持图像宽高比 */
+  height: 50px; /* 或根据您的具体需求调整高度和宽度 */
+  width: 160px; /* 保持图像宽高比 */
 }
 
 .collapse-button {
