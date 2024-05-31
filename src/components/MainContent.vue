@@ -64,9 +64,7 @@ export default {
         this.userInput = ''; // 清空输入框
 
         try {
-          // const response = await axios.post('http://10.176.64.81:7861/chat/chat', payload, {
-          //   const response = await axios.post('http://localhost:7861/chat/chat', payload, {
-            const response = await this.$axios.post('/chat/chat', payload, {
+          const response = await this.$axios.post('/chat/knowledge_base_chat', payload, {
             responseType: 'text'
           });
 

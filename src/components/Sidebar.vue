@@ -4,44 +4,27 @@
       <font-awesome-icon icon="comments" /> 对话
     </router-link>
     <router-link to="/knowledge-base" class="menu-button">
-      <font-awesome-icon icon="book" /> 知识库管理
+      <font-awesome-icon icon="book" /> 知识库对话
     </router-link>
-
-<!--    <div class="menu-select">-->
-<!--      <label for="dialogue-mode">请选择对话模式：</label>-->
-<!--      <select id="dialogue-mode" v-model="selectedDialogueMode">-->
-<!--        <option value="default">default</option>-->
-<!--        <option value="other">其他选项</option>-->
-<!--      </select>-->
-<!--    </div>-->
-<!--    <div class="menu-select">-->
-<!--      <label for="llm-model">请选择 LLM 模型：</label>-->
-<!--      <select id="llm-model" v-model="selectedLLMModel">-->
-<!--        <option value="LLM模型">LLM模型</option>-->
-<!--        <option value="Llama3-8B">Llama3-8B-chat-chinese-v2</option>-->
-<!--      </select>-->
-<!--    </div>-->
-<!--    <div class="menu-slider">-->
-<!--      <label for="temperature">Temperature:</label>-->
-<!--      <div class="slider-container">-->
-<!--        <span class="min-max">0.00</span>-->
-<!--        <span class="min-max">2.00</span>-->
-<!--        <br>-->
-<!--        <input type="range" id="temperature" min="0" max="2" step="0.01" v-model="temperature" @input="updateTemperature">-->
-
-<!--        <div class="current-value">{{ temperature }}</div>-->
-<!--      </div>-->
-<!--    </div>-->
+    <div v-if="isKnowledgeBasePath" class="menu-select">
+      <label for="knowledge-base-select">选择知识库</label>
+      <select id="knowledge-base-select" v-model="selectedKnowledgeBase">
+        <option value="kb1">知识库 1</option>
+        <option value="kb2">知识库 2</option>
+        <option value="kb3">知识库 3</option>
+        <!-- 添加更多选项 -->
+      </select>
+    </div>
   </aside>
 </template>
 
 <script>
-
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faComments, faBook } from '@fortawesome/free-solid-svg-icons'
 
 library.add(faComments, faBook)
+
 export default {
   name: 'SidebarComponent',
   components: {
@@ -50,16 +33,13 @@ export default {
 
   data() {
     return {
-      selectedDialogueMode: 'default',
-      selectedLLMModel: 'LLM模型',
-      temperature: 0 // 初始化温度为 0
+      selectedKnowledgeBase: '', // 添加选中的知识库
     };
   },
 
-  methods: {
-    updateTemperature() {
-      console.log(`Temperature now: ${this.temperature}`);  // Debug 输出当前温度值
-      // this.$forceUpdate();  // 尝试手动触发更新
+  computed: {
+    isKnowledgeBasePath() {
+      return this.$route.path === '/knowledge-base';
     }
   }
 };
@@ -75,6 +55,7 @@ export default {
   height: 100vh;
   overflow: auto;
 }
+
 
 .menu-button, .menu-select, .menu-slider {
   margin: 10px 0;
@@ -98,16 +79,29 @@ export default {
   cursor: pointer;
 }
 
-.menu-select select, .menu-slider input {
+.menu-select {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 居中对齐 */
+}
+
+.knowledge-base-label {
+  color: white;
+  margin-bottom: 5px;
+  text-align: center; /* 居中对齐 */
+}
+
+.menu-select select {
   width: 100%;
   padding: 8px;
   background-color: #333;
   color: white;
   border: none;
   border-radius: 4px;
+  text-align: center; /* 居中对齐 */
 }
 
-.menu-select select:focus, .menu-slider input:focus {
+.menu-select select:focus {
   outline: none;
   background-color: #444;
 }
