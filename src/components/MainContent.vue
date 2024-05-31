@@ -1,5 +1,5 @@
 <template>
-  <div class="main-content">
+  <div ref="mainContent" class="main-content">
     <div class="history">
       <div v-if="showGreeting" class="greeting">
         <div class="greeting_words" ref="greetingWords">
@@ -64,7 +64,7 @@ export default {
         this.userInput = ''; // 清空输入框
 
         try {
-          const response = await this.$axios.post('/chat/knowledge_base_chat', payload, {
+          const response = await this.$axios.post('/chat/chat', payload, {
             responseType: 'text'
           });
 

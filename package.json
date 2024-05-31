@@ -13,6 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/vue-fontawesome": "^3.0.6",
     "axios": "^1.7.2",
+    "file-saver": "^2.0.5",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2",
     "vuex": "^4.1.0"

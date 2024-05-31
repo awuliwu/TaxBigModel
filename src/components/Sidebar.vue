@@ -15,13 +15,17 @@
         <!-- 添加更多选项 -->
       </select>
     </div>
+    <button class="menu-button" @click="exportHistory">导出记录</button>
+    <button class="menu-button" @click="clearHistory">清空记录</button>
   </aside>
 </template>
+
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faComments, faBook } from '@fortawesome/free-solid-svg-icons'
+import fileSaver from 'file-saver' // 需要安装 file-saver 库： npm install file-saver
 
 library.add(faComments, faBook)
 
@@ -41,9 +45,39 @@ export default {
     isKnowledgeBasePath() {
       return this.$route.path === '/knowledge-base';
     }
+  },
+
+  methods: {
+    getHistory() {
+      if (this.$route.path === '/') {
+        return this.$root.$children[0].$refs.mainContent.history;
+      } else if (this.$route.path === '/knowledge-base') {
+        return this.$root.$children[0].$refs.knowledgeBase.history;
+      }
+      return [];
+    },
+    exportHistory() {
+      const history = this.getHistory();
+      let mdContent = '# 对话记录\n\n';
+      history.forEach(item => {
+        mdContent += `**${item.role}**: ${item.content}\n\n`;
+      });
+      const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
+      fileSaver.saveAs(blob, 'history.md');
+    },
+    clearHistory() {
+      if (this.$route.path === '/') {
+        this.$root.$children[0].$refs.mainContent.history = [];
+        this.$root.$children[0].$refs.mainContent.showGreeting = true;
+      } else if (this.$route.path === '/knowledge-base') {
+        this.$root.$children[0].$refs.knowledgeBase.history = [];
+      }
+      this.$router.go(); // 刷新当前路由
+    }
   }
 };
 </script>
+
 
 <style>
 .sidebar {
