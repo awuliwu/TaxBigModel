@@ -30,7 +30,7 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background-color: transparent;
+  background-color: #333;
   color: white;
 }
 
