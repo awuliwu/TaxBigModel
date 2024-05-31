@@ -8,7 +8,7 @@
       </div>
       <div v-for="(item, index) in history" :key="index">
         <user-input-history v-if="item.role === 'user'" :input="item.content"></user-input-history>
-        <model-response-history v-else :response="item.content"></model-response-history>
+        <model-response-history v-else :response="item.content" :isLatest="index === history.length - 1"></model-response-history>
         <br>
       </div>
     </div>

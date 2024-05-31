@@ -5,14 +5,70 @@
             <div class="model-response-history" ref="responseText">
                 <div>{{ response }}</div>
             </div>
-            <div class="reaction-buttons">
+            <div v-if="isLatest" class="reaction-buttons">
                 <button @click="likeResponse">
-                    <img src="./icons/赞_thumbs-up.png" alt="Like" class="reaction-icon">
-<!--                    {{ likes }}-->
+                    <svg
+                        v-if="!liked"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#333"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="reaction-icon"
+                    >
+                        <path d="M14 9V5a3 3 0 0 0-3-3 4.35 4.35 0 0 0-.88.09 1.73 1.73 0 0 0-1.29 1.91v5.5H3.3A1.3 1.3 0 0 0 2 10.7v8.6A1.3 1.3 0 0 0 3.3 20h6.41a4.33 4.33 0 0 0 4.29-3.7l.38-3A1.73 1.73 0 0 0 14 12h-1V9z"></path>
+                    </svg>
+                    <svg
+                        v-else
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#ff0"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="reaction-icon"
+                    >
+                        <path d="M14 9V5a3 3 0 0 0-3-3 4.35 4.35 0 0 0-.88.09 1.73 1.73 0 0 0-1.29 1.91v5.5H3.3A1.3 1.3 0 0 0 2 10.7v8.6A1.3 1.3 0 0 0 3.3 20h6.41a4.33 4.33 0 0 0 4.29-3.7l.38-3A1.73 1.73 0 0 0 14 12h-1V9z"></path>
+                    </svg>
                 </button>
                 <button @click="dislikeResponse">
-                    <img src="./icons/踩_thumbs-down.png" alt="Dislike" class="reaction-icon">
-<!--                    {{ dislikes }}-->
+                    <svg
+                        v-if="!disliked"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#333"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="reaction-icon"
+                    >
+                        <path d="M10 15v4a3 3 0 0 0 3 3 4.35 4.35 0 0 0 .88-.09 1.73 1.73 0 0 0 1.29-1.91V13h5.1a1.3 1.3 0 0 0 1.3-1.3V3.1A1.3 1.3 0 0 0 19.3 2h-6.41a4.33 4.33 0 0 0-4.29 3.7l-.38 3A1.73 1.73 0 0 0 10 12h1v3z"></path>
+                    </svg>
+                    <svg
+                        v-else
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="#ff0"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="reaction-icon"
+                    >
+                        <path d="M10 15v4a3 3 0 0 0 3 3 4.35 4.35 0 0 0 .88-.09 1.73 1.73 0 0 0 1.29-1.91V13h5.1a1.3 1.3 0 0 0 1.3-1.3V3.1A1.3 1.3 0 0 0 19.3 2h-6.41a4.33 4.33 0 0 0-4.29 3.7l-.38 3A1.73 1.73 0 0 0 10 12h1v3z"></path>
+                    </svg>
                 </button>
             </div>
         </div>
@@ -23,12 +79,15 @@
 export default {
     name: 'ModelResponseHistory',
     props: {
-        response: String
+        response: String,
+        isLatest: Boolean
     },
     data() {
         return {
             likes: 0,
-            dislikes: 0
+            dislikes: 0,
+            liked: false,
+            disliked: false
         };
     },
     mounted() {
@@ -52,10 +111,28 @@ export default {
             type();
         },
         likeResponse() {
-            this.likes += 1;
+            this.liked = !this.liked;
+            if (this.liked) {
+                this.likes += 1;
+                if (this.disliked) {
+                    this.disliked = false;
+                    this.dislikes -= 1;
+                }
+            } else {
+                this.likes -= 1;
+            }
         },
         dislikeResponse() {
-            this.dislikes += 1;
+            this.disliked = !this.disliked;
+            if (this.disliked) {
+                this.dislikes += 1;
+                if (this.liked) {
+                    this.liked = false;
+                    this.likes -= 1;
+                }
+            } else {
+                this.dislikes -= 1;
+            }
         }
     }
 };
