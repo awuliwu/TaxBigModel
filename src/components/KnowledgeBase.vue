@@ -38,13 +38,19 @@ export default {
     };
   },
 
+  watch: {
+    history(newHistory) {
+      this.$emit('update-history', newHistory); // 通过事件通知父组件更新 history
+    }
+  },
+
 
   methods: {
     async sendMessage() {
       if (this.userInput.trim() !== '') {
         const userMessage = { role: 'user', content: this.userInput };
         this.history.push(userMessage); // 添加用户输入到历史记录
-
+        this.$emit('update-history', userMessage);
         const payload = {
           query: this.userInput,
           knowledge_base_name: this.selectedKnowledgeBase, // 使用传递来的选中的知识库名称
@@ -80,6 +86,7 @@ export default {
               console.log("Model Response Text:", modelResponseText); // 检查 answer 字段
               const modelResponse = { role: 'assistant', content: modelResponseText };
               this.history.push(modelResponse); // 添加大模型回复到历史记录
+              this.$emit('update-history', modelResponse);
           } else {
               console.error("Parsed response data is missing 'answer' field:", jsonResponse);
           }
