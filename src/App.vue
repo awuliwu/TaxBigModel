@@ -33,8 +33,11 @@ export default {
     toggleCollapse(collapsed) {
       this.isCollapsed = collapsed;
     },
-    updateKnowledgeBase(newKnowledgeBase) {
-        this.selectedKnowledgeBase = newKnowledgeBase;
+    updateHistory(newHistory) {
+      this.history = newHistory; // 更新 history 数据
+    },
+    clearHistory() {
+      this.history = []; // 清空 history 数据
     }
   }
 };

@@ -53,6 +53,7 @@ export default {
         const userMessage = { role: 'user', content: this.userInput };
         this.history.push(userMessage); // 添加用户输入到历史记录
         this.$emit('update-history', userMessage);
+        console.log(this.history)
         this.showGreeting = false; // 隐藏欢迎词
 
         const payload = {

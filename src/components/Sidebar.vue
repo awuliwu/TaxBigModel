@@ -39,43 +39,37 @@ export default {
     };
   },
 
+  props: {
+    history: {
+      type: Array,
+      default: () => []
+    }
+  },
+
   computed: {
     isKnowledgeBasePath() {
       return this.$route.path === '/knowledge-base';
     }
   },
   methods: {
-      updateKnowledgeBase() {
-          this.$emit('update:knowledgeBase', this.selectedKnowledgeBase);
-      },
-      getHistory() {
-          if (this.$route.path === '/') {
-              return this.$root.$children[0].$refs.mainContent.history;
-          } else if (this.$route.path === '/knowledge-base') {
-              return this.$root.$children[0].$refs.knowledgeBase.history;
-          }
-          return [];
-      },
-      exportHistory() {
-          const history = this.getHistory();
-          let mdContent = '# 对话记录\n\n';
-          history.forEach(item => {
-              mdContent += `**${item.role}**: ${item.content}\n\n`;
-          });
-          const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
-          fileSaver.saveAs(blob, 'history.md');
-      },
-      clearHistory() {
-          if (this.$route.path === '/') {
-              this.$root.$children[0].$refs.mainContent.history = [];
-              this.$root.$children[0].$refs.mainContent.showGreeting = true;
-          } else if (this.$route.path === '/knowledge-base') {
-              this.$root.$children[0].$refs.knowledgeBase.history = [];
-          }
-          this.$router.go(); // 刷新当前路由
-      }
-
-}
+    updateKnowledgeBase() {
+      this.$emit('update:knowledgeBase', this.selectedKnowledgeBase);
+    },
+    exportHistory() {
+      const history = this.history;
+      console.log(history)
+      let mdContent = '# 对话记录\n\n';
+      history.forEach(item => {
+        mdContent += `**${item.role}**: ${item.content}\n\n`;
+      });
+      const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
+      fileSaver.saveAs(blob, 'history.md');
+    },
+    clearHistory() {
+      this.$emit('clear-history'); // 触发事件让父组件清空 history
+      this.$router.go(); // 刷新当前路由
+    }
+  }
 };
 </script>
 
