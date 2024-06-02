@@ -1,5 +1,5 @@
 <template>
-  <div class="main-content">
+  <div ref="knowledgeBase" class="main-content">
     <div class="history">
       <div v-for="(item, index) in history" :key="index">
         <user-input-history v-if="item.role === 'user'" :input="item.content"></user-input-history>
