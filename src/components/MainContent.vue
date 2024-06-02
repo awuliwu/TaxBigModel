@@ -42,7 +42,7 @@ export default {
     this.typeWriter();
   },
   watch: {
-    localHistory(newHistory) {
+    history(newHistory) {
       this.$emit('update-history', newHistory); // 通过事件通知父组件更新 history
     }
   },

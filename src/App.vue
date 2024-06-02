@@ -1,13 +1,12 @@
 <template>
   <div id="app">
     <div class="container">
-      <!-- 右箭头按钮，仅当侧边栏和头部被收起时显示 -->
       <button v-show="isCollapsed" class="expand-button" @click="toggleCollapse(false)">&#9654;</button>
       <div class="left-sidebar" v-show="!isCollapsed">
         <header-component @toggle="toggleCollapse"></header-component>
-        <sidebar-component @update:knowledgeBase="updateKnowledgeBase"></sidebar-component>
+        <sidebar-component :history="history" @update:knowledgeBase="updateKnowledgeBase" @clear-history="clearHistory"></sidebar-component>
       </div>
-      <router-view class="main-content" :class="{ 'full-width': isCollapsed } " :selectedKnowledgeBase="selectedKnowledgeBase"></router-view>
+      <router-view class="main-content" :class="{ 'full-width': isCollapsed }" :selectedKnowledgeBase="selectedKnowledgeBase" @update-history="updateHistory"></router-view>
     </div>
   </div>
 </template>
@@ -24,24 +23,28 @@ export default {
   },
   data() {
     return {
-      isCollapsed: false, // 控制侧边栏和头部的折叠状态，初始显示
-      history: [], // 初始化 history 数组
-      selectedKnowledgeBase: '税务案例库' // 默认选中的知识库
+      isCollapsed: false,
+      history: [],
+      selectedKnowledgeBase: '税务案例库',
     };
   },
   methods: {
     toggleCollapse(collapsed) {
       this.isCollapsed = collapsed;
     },
-    updateHistory(newHistory) {
-      this.history = newHistory; // 更新 history 数据
+    updateKnowledgeBase(newKnowledgeBase) {
+      this.selectedKnowledgeBase = newKnowledgeBase;
+    },
+    updateHistory(newHistoryItem) {
+      this.history.push(newHistoryItem); // 追加新的历史记录项
     },
     clearHistory() {
-      this.history = []; // 清空 history 数据
+      this.history = [];
     }
   }
 };
 </script>
+
 
 <style>
 .container {
