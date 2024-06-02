@@ -64,7 +64,7 @@ export default {
         this.userInput = ''; // 清空输入框
 
         try {
-          const response = await this.$axios.post('/chat/knowledge_base_chat', payload, {
+          const response = await this.$axios.post('/chat/chat', payload, {
             responseType: 'text'
           });
 
