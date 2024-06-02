@@ -24,7 +24,8 @@ export default {
   },
   data() {
     return {
-      isCollapsed: false // 控制侧边栏和头部的折叠状态，初始显示
+      isCollapsed: false, // 控制侧边栏和头部的折叠状态，初始显示
+      history: [], // 初始化 history 数组
     };
   },
   methods: {

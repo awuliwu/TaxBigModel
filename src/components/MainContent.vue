@@ -41,12 +41,18 @@ export default {
   mounted() {
     this.typeWriter();
   },
-
+  watch: {
+    localHistory(newHistory) {
+      this.$emit('update-history', newHistory); // 通过事件通知父组件更新 history
+    }
+  },
   methods: {
+
     async sendMessage() {
       if (this.userInput.trim() !== '') {
         const userMessage = { role: 'user', content: this.userInput };
         this.history.push(userMessage); // 添加用户输入到历史记录
+        this.$emit('update-history', userMessage);
         this.showGreeting = false; // 隐藏欢迎词
 
         const payload = {
@@ -77,6 +83,7 @@ export default {
             console.log("Model Response Text:", modelResponseText); // 检查 text 字段
             const modelResponse = { role: 'assistant', content: modelResponseText };
             this.history.push(modelResponse); // 添加大模型回复到历史记录
+            this.$emit('update-history', modelResponse);
           } else {
             console.error("Parsed response data is missing 'text' field:", jsonResponse);
           }
