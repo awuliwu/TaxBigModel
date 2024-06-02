@@ -5,9 +5,9 @@
       <button v-show="isCollapsed" class="expand-button" @click="toggleCollapse(false)">&#9654;</button>
       <div class="left-sidebar" v-show="!isCollapsed">
         <header-component @toggle="toggleCollapse"></header-component>
-        <sidebar-component></sidebar-component>
+        <sidebar-component @update:knowledgeBase="updateKnowledgeBase"></sidebar-component>
       </div>
-      <router-view class="main-content" :class="{ 'full-width': isCollapsed }"></router-view>
+      <router-view class="main-content" :class="{ 'full-width': isCollapsed } " :selectedKnowledgeBase="selectedKnowledgeBase"></router-view>
     </div>
   </div>
 </template>
@@ -26,11 +26,15 @@ export default {
     return {
       isCollapsed: false, // 控制侧边栏和头部的折叠状态，初始显示
       history: [], // 初始化 history 数组
+      selectedKnowledgeBase: '税务案例库' // 默认选中的知识库
     };
   },
   methods: {
     toggleCollapse(collapsed) {
       this.isCollapsed = collapsed;
+    },
+    updateKnowledgeBase(newKnowledgeBase) {
+        this.selectedKnowledgeBase = newKnowledgeBase;
     }
   }
 };

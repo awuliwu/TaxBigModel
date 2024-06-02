@@ -28,7 +28,9 @@ export default {
     UserInputHistory,
     ModelResponseHistory,
   },
-
+  props: {
+      selectedKnowledgeBase: String // 接收从 SidebarComponent 传递来的选中的知识库名称
+  },
   data() {
     return {
       userInput: '',
@@ -45,7 +47,7 @@ export default {
 
         const payload = {
           query: this.userInput,
-          knowledge_base_name: "samples", // 修改为接口所需字段
+          knowledge_base_name: this.selectedKnowledgeBase, // 使用传递来的选中的知识库名称
           top_k: 3, // 根据需要设置
           score_threshold: 1, // 根据需要设置
           history: this.history, // 保持历史记录
@@ -62,20 +64,27 @@ export default {
           const response = await this.$axios.post('/chat/knowledge_base_chat', payload, {
             responseType: 'json'
           });
+          console.log(this.selectedKnowledgeBase)
+          let jsonResponse = response.data;
 
-          const jsonResponse = response.data; // 直接解析JSON响应
+          // 如果返回的数据有前缀 "data: "，则移除它
+          if (typeof jsonResponse === 'string' && jsonResponse.startsWith('data: ')) {
+              jsonResponse = jsonResponse.substring(5);
+          }
+
+          jsonResponse = JSON.parse(jsonResponse); // 解析JSON
 
           console.log(jsonResponse); // 检查解析后的数据结构
           if (jsonResponse && jsonResponse.answer) { // 根据实际返回的数据结构检查
-            const modelResponseText = jsonResponse.answer;
-            console.log("Model Response Text:", modelResponseText); // 检查 answer 字段
-            const modelResponse = { role: 'assistant', content: modelResponseText };
-            this.history.push(modelResponse); // 添加大模型回复到历史记录
+              const modelResponseText = jsonResponse.answer;
+              console.log("Model Response Text:", modelResponseText); // 检查 answer 字段
+              const modelResponse = { role: 'assistant', content: modelResponseText };
+              this.history.push(modelResponse); // 添加大模型回复到历史记录
           } else {
-            console.error("Parsed response data is missing 'answer' field:", jsonResponse);
+              console.error("Parsed response data is missing 'answer' field:", jsonResponse);
           }
         } catch (error) {
-          console.error("Error sending message:", error);
+            console.error("Error sending message:", error);
         }
       }
     },

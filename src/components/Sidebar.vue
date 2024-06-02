@@ -8,25 +8,23 @@
     </router-link>
     <div v-if="isKnowledgeBasePath" class="menu-select">
       <label for="knowledge-base-select">选择知识库</label>
-      <select id="knowledge-base-select" v-model="selectedKnowledgeBase">
-        <option value="kb1">知识库 1</option>
-        <option value="kb2">知识库 2</option>
-        <option value="kb3">知识库 3</option>
+      <select id="knowledge-base-select" v-model="selectedKnowledgeBase" @change="updateKnowledgeBase">
+        <option value="税务案例库">税务案例库</option>
+        <option value="税务相关法规库">税务相关法规库</option>
+        <option value="税务基础知识库">税务基础知识库</option>
         <!-- 添加更多选项 -->
       </select>
     </div>
-    <button class="menu-button" @click="exportHistory">导出记录</button>
-    <button class="menu-button" @click="clearHistory">清空记录</button>
+      <button class="menu-button" @click="exportHistory">导出记录</button>
+      <button class="menu-button" @click="clearHistory">清空记录</button>
   </aside>
 </template>
-
 
 <script>
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faComments, faBook } from '@fortawesome/free-solid-svg-icons'
 import fileSaver from 'file-saver' // 需要安装 file-saver 库： npm install file-saver
-
 library.add(faComments, faBook)
 
 export default {
@@ -37,7 +35,7 @@ export default {
 
   data() {
     return {
-      selectedKnowledgeBase: '', // 添加选中的知识库
+      selectedKnowledgeBase: '税务案例库', // 添加选中的知识库
     };
   },
 
@@ -46,38 +44,40 @@ export default {
       return this.$route.path === '/knowledge-base';
     }
   },
-
   methods: {
-    getHistory() {
-      if (this.$route.path === '/') {
-        return this.$root.$children[0].$refs.mainContent.history;
-      } else if (this.$route.path === '/knowledge-base') {
-        return this.$root.$children[0].$refs.knowledgeBase.history;
+      updateKnowledgeBase() {
+          this.$emit('update:knowledgeBase', this.selectedKnowledgeBase);
+      },
+      getHistory() {
+          if (this.$route.path === '/') {
+              return this.$root.$children[0].$refs.mainContent.history;
+          } else if (this.$route.path === '/knowledge-base') {
+              return this.$root.$children[0].$refs.knowledgeBase.history;
+          }
+          return [];
+      },
+      exportHistory() {
+          const history = this.getHistory();
+          let mdContent = '# 对话记录\n\n';
+          history.forEach(item => {
+              mdContent += `**${item.role}**: ${item.content}\n\n`;
+          });
+          const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
+          fileSaver.saveAs(blob, 'history.md');
+      },
+      clearHistory() {
+          if (this.$route.path === '/') {
+              this.$root.$children[0].$refs.mainContent.history = [];
+              this.$root.$children[0].$refs.mainContent.showGreeting = true;
+          } else if (this.$route.path === '/knowledge-base') {
+              this.$root.$children[0].$refs.knowledgeBase.history = [];
+          }
+          this.$router.go(); // 刷新当前路由
       }
-      return [];
-    },
-    exportHistory() {
-      const history = this.getHistory();
-      let mdContent = '# 对话记录\n\n';
-      history.forEach(item => {
-        mdContent += `**${item.role}**: ${item.content}\n\n`;
-      });
-      const blob = new Blob([mdContent], { type: 'text/markdown;charset=utf-8' });
-      fileSaver.saveAs(blob, 'history.md');
-    },
-    clearHistory() {
-      if (this.$route.path === '/') {
-        this.$root.$children[0].$refs.mainContent.history = [];
-        this.$root.$children[0].$refs.mainContent.showGreeting = true;
-      } else if (this.$route.path === '/knowledge-base') {
-        this.$root.$children[0].$refs.knowledgeBase.history = [];
-      }
-      this.$router.go(); // 刷新当前路由
-    }
-  }
+
+}
 };
 </script>
-
 
 <style>
 .sidebar {
@@ -170,3 +170,8 @@ export default {
   border-radius: 4px;
 }
 </style>
+
+
+updateKnowledgeBase() {
+this.$emit('update:knowledgeBase', this.selectedKnowledgeBase);
+},
