@@ -1,10 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainContent from '@/components/MainContent.vue';
 import KnowledgeBase from '@/components/KnowledgeBase.vue';
+import WelcomePage from '@/components/WelcomePage.vue'
 
 const routes = [
     {
         path: '/',
+        name: 'WelcomePage',
+        component: WelcomePage,
+    },
+    {
+        path: '/main-content',
         name: 'MainContent',
         component: MainContent,
     },

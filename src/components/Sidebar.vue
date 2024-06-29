@@ -1,6 +1,6 @@
 <template>
   <aside class="sidebar">
-    <router-link to="/" class="menu-button">
+    <router-link to="/main-content" class="menu-button">
       <font-awesome-icon icon="comments" /> 对话
     </router-link>
     <router-link to="/knowledge-base" class="menu-button">
@@ -76,12 +76,16 @@ export default {
 <style>
 .sidebar {
   flex: 1;
-  padding: 20px;
   display: flex;
   flex-direction: column;
   color: white;
   height: 100vh;
   overflow: auto;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.5); /* 透明白色背景 */
+  border-radius: 15px; /* 圆角 */
+  margin: 20px; /* 留有一定间距 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
 }
 
 

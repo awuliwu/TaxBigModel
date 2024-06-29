@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <animated-background></animated-background>
     <div class="container">
       <button v-show="isCollapsed" class="expand-button" @click="toggleCollapse(false)">&#9654;</button>
       <div class="left-sidebar" v-show="!isCollapsed">
@@ -14,12 +15,14 @@
 <script>
 import HeaderComponent from './components/Header.vue';
 import SidebarComponent from './components/Sidebar.vue';
+import AnimatedBackground from './components/AnimatedBackground.vue';
 
 export default {
   name: 'App',
   components: {
     HeaderComponent,
     SidebarComponent,
+    AnimatedBackground
   },
   data() {
     return {
@@ -59,13 +62,13 @@ export default {
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #444;
+  //background-color: #444;
 }
 
 .main-content {
   height: 100%;
   flex: 1;
-  background-color: #222;
+  //background-color: #222;
   color: white;
   display: flex;
   flex-direction: column;

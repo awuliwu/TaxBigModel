@@ -1,11 +1,6 @@
 <template>
   <div ref="mainContent" class="main-content">
     <div class="history">
-      <div v-if="showGreeting" class="greeting">
-        <div class="greeting_words" ref="greetingWords">
-          欢迎使用复旦大学税务大模型系统!
-        </div>
-      </div>
       <div v-for="(item, index) in history" :key="index">
         <user-input-history v-if="item.role === 'user'" :input="item.content"></user-input-history>
         <model-response-history v-else :response="item.content" :isLatest="index === history.length - 1"></model-response-history>
@@ -35,11 +30,7 @@ export default {
     return {
       userInput: '',
       history: [],
-      showGreeting: true,
     };
-  },
-  mounted() {
-    this.typeWriter();
   },
   watch: {
     history(newHistory) {
@@ -54,7 +45,6 @@ export default {
         this.history.push(userMessage); // 添加用户输入到历史记录
         this.$emit('update-history', userMessage);
         console.log(this.history)
-        this.showGreeting = false; // 隐藏欢迎词
 
         const payload = {
           query: this.userInput,
@@ -94,22 +84,6 @@ export default {
 
       }
     },
-    typeWriter() {
-      const element = this.$refs.greetingWords;
-      const text = element.innerText;
-      element.innerText = '';
-      let i = 0;
-
-      const type = () => {
-        if (i < text.length) {
-          element.innerText += text.charAt(i);
-          i++;
-          setTimeout(type, 100); // 调整此值以加快或减慢打字速度
-        }
-      };
-
-      type();
-    }
   }
 };
 </script>
@@ -120,9 +94,12 @@ export default {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  background-color: #222; /* 暗色背景 */
-  height: 100vh;
+  height: 100vh; /* 页面高度 */
   overflow: auto;
+  background-color: rgba(255, 255, 255, 0.5); /* 透明白色背景 */
+  border-radius: 15px; /* 圆角 */
+  margin: 0 20px 20px 20px; /* 取消上间距，保留其他间距 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
 }
 
 .history {
@@ -145,7 +122,7 @@ export default {
 .message-input {
   flex: 1;
   padding: 15px;
-  background-color: #333;
+  //background-color: #333;
   color: white;
   border: none;
   border-radius: 20px; /* 圆角样式 */
@@ -154,7 +131,7 @@ export default {
 
 .send-button {
   padding: 10px 15px;
-  background-color: #444;
+  //background-color: #444;
   color: white;
   border: none;
   border-radius: 50%; /* 发送按钮圆形样式 */
@@ -165,25 +142,4 @@ export default {
   background-color: #555;
 }
 
-.greeting {
-  margin-top: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%; /* 确保greeting区填满整个历史区高度 */
-  width: 100%; /* 确保greeting区填满整个历史区宽度 */
-}
-
-.greeting_words {
-  justify-content: center;
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  width: 700px;
-  border: 1px solid #555;
-  border-radius: 15px; /* 添加圆角 */
-  background-color: #333; /* 轻色背景增加对比 */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影提升立体感 */
-  font-size: 24px;
-}
 </style>

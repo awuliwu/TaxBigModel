@@ -108,7 +108,7 @@ export default {
   padding: 20px;
   display: flex;
   flex-direction: column;
-  background-color: #222; /* 暗色背景 */
+  //background-color: #222; /* 暗色背景 */
   height: 100vh;
   overflow: auto;
 }

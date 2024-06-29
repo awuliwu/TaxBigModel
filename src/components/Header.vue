@@ -30,8 +30,10 @@ export default {
   display: flex;
   justify-content: space-between;
   padding: 10px;
-  background-color: #333;
-  color: white;
+  overflow: hidden;
+  z-index: -1; /* 确保背景在内容后面 */
+  background: rgba(173, 216, 230, 0.2); /* 略有透明度的背景 */
+
 }
 
 .logo img {
