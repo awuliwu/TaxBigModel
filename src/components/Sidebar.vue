@@ -1,22 +1,21 @@
 <template>
   <aside class="sidebar">
-    <router-link to="/main-content" class="menu-button">
+    <router-link to="/main-content" class="menu-button gradient-green">
       <font-awesome-icon icon="comments" /> 对话
     </router-link>
-    <router-link to="/knowledge-base" class="menu-button">
+    <router-link to="/knowledge-base" class="menu-button gradient-blue">
       <font-awesome-icon icon="book" /> 知识库对话
     </router-link>
     <div v-if="isKnowledgeBasePath" class="menu-select">
-      <label for="knowledge-base-select">选择知识库</label>
+      <label for="knowledge-base-select" class="knowledge-base-label">选择知识库</label>
       <select id="knowledge-base-select" v-model="selectedKnowledgeBase" @change="updateKnowledgeBase">
         <option value="税务案例库">税务案例库</option>
         <option value="税务相关法规库">税务相关法规库</option>
         <option value="税务基础知识库">税务基础知识库</option>
-        <!-- 添加更多选项 -->
       </select>
     </div>
-      <button class="menu-button" @click="exportHistory">导出记录</button>
-      <button class="menu-button" @click="clearHistory">清空记录</button>
+    <button class="menu-button gradient-purple" @click="exportHistory">导出记录</button>
+    <button class="menu-button gradient-red" @click="clearHistory">清空记录</button>
   </aside>
 </template>
 
@@ -84,10 +83,9 @@ export default {
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.5); /* 透明白色背景 */
   border-radius: 15px; /* 圆角 */
-  margin: 20px; /* 留有一定间距 */
+  margin: 20px 0 0 20px; /* 留有一定间距 */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
 }
-
 
 .menu-button, .menu-select, .menu-slider {
   margin: 10px 0;
@@ -95,18 +93,16 @@ export default {
 
 .menu-button {
   padding: 10px;
-  background-color: #333;
   text-align: center;
   border: none;
   border-radius: 4px;
   text-decoration: none;
   color: white;
-  transition: background-color 0.3s, transform 0.3s;
+  transition: transform 0.3s;
 }
 
 .menu-button:hover,
 .menu-button-active {
-  background-color: #555;
   transform: scale(1.05);
   cursor: pointer;
 }
@@ -118,15 +114,15 @@ export default {
 }
 
 .knowledge-base-label {
-  color: white;
+  color: darkgrey;
   margin-bottom: 5px;
   text-align: center; /* 居中对齐 */
 }
 
 .menu-select select {
   width: 100%;
-  padding: 8px;
-  background-color: #333;
+  padding: 10px;
+  background-color: lightskyblue;
   color: white;
   border: none;
   border-radius: 4px;
@@ -135,7 +131,7 @@ export default {
 
 .menu-select select:focus {
   outline: none;
-  background-color: #444;
+  background-color: skyblue;
 }
 
 .slider-container {
@@ -167,9 +163,29 @@ export default {
   padding: 2px 8px;
   border-radius: 4px;
 }
+
+/* 新增的渐变色样式 */
+.gradient-green {
+  background: linear-gradient(to right, #6dd5ed, #2193b0); /* 从浅绿色到深绿色 */
+}
+
+.gradient-blue {
+  background: linear-gradient(to right, #a1c4fd, #c2e9fb); /* 从浅蓝色到深蓝色 */
+}
+
+.gradient-purple {
+  background: linear-gradient(to right, #d4fc79, #96e6a1); /* 从浅紫色到深紫色 */
+}
+
+.gradient-yellow {
+  background: linear-gradient(to right, #fbc2eb, #a6c1ee); /* 从浅黄色到深黄色 */
+}
+
+.gradient-orange {
+  background: linear-gradient(to right, #ffecd2, #fcb69f); /* 从浅橙色到深橙色 */
+}
+
+.gradient-red {
+  background: linear-gradient(to right, #fbc2eb, #a18cd1); /* 从浅红色到深红色 */
+}
 </style>
-
-
-updateKnowledgeBase() {
-this.$emit('update:knowledgeBase', this.selectedKnowledgeBase);
-},

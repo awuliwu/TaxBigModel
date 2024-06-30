@@ -38,7 +38,6 @@ export default {
     }
   },
   methods: {
-
     async sendMessage() {
       if (this.userInput.trim() !== '') {
         const userMessage = { role: 'user', content: this.userInput };
@@ -52,7 +51,7 @@ export default {
           history_len: this.history.length,
           history: this.history,
           stream: false,
-          model_name: "chatglm3-6b",
+          model_name: "tax_model",
           temperature: 0.7,
           max_tokens: 0,
           prompt_name: "default"
@@ -88,7 +87,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .main-content {
   flex: 1;
   padding: 20px;
@@ -96,50 +95,52 @@ export default {
   flex-direction: column;
   height: 100vh; /* 页面高度 */
   overflow: auto;
-  background-color: rgba(255, 255, 255, 0.5); /* 透明白色背景 */
-  border-radius: 15px; /* 圆角 */
-  margin: 0 20px 20px 20px; /* 取消上间距，保留其他间距 */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
+  background-color: rgba(255, 255, 255, 0.5) !important; /* 透明白色背景 */
+  border-radius: 15px !important; /* 圆角 */
+  margin: 0 20px 20px 20px !important; /* 取消上间距，保留其他间距 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
 }
 
 .history {
   display: flex;
   flex-direction: column;
-  margin-bottom: auto;
+  margin-bottom: auto !important;
 }
 
 .input-area {
-  margin-top: auto;
-  display: flex;
-  justify-content: center; /* 居中输入区 */
+  margin-top: auto !important;
+  display: flex !important;
+  justify-content: center !important; /* 居中输入区 */
 }
 
 .input-form {
-  display: flex;
-  width: 60%; /* 输入区占main content的60% */
+  display: flex !important;
+  width: 100% !important; /* 输入区占main content的100% */
+  max-width: 800px !important; /* 限制输入区的最大宽度 */
 }
 
 .message-input {
-  flex: 1;
-  padding: 15px;
-  //background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 20px; /* 圆角样式 */
-  margin-right: 5px;
+  flex: 1 !important;
+  padding: 15px !important;
+  background-color: rgba(255, 255, 255, 0.9) !important; /* 透明白色背景 */
+  color: #333 !important;
+  border: 1px solid #ccc !important;
+  border-radius: 20px !important; /* 圆角样式 */
+  margin-right: 5px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
 }
 
 .send-button {
-  padding: 10px 15px;
-  //background-color: #444;
-  color: white;
-  border: none;
-  border-radius: 50%; /* 发送按钮圆形样式 */
-  cursor: pointer;
+  padding: 10px 15px !important;
+  background-color: #4CAF50 !important; /* 按钮背景色 */
+  color: white !important;
+  border: none !important;
+  border-radius: 50% !important; /* 发送按钮圆形样式 */
+  cursor: pointer !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
 }
 
 .send-button:hover {
-  background-color: #555;
+  background-color: #45a049 !important;
 }
-
 </style>

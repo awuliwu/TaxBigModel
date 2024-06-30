@@ -6,7 +6,7 @@ import router from './router';
 import axios from 'axios';
 
 // 配置Axios的baseURL
-axios.defaults.baseURL = 'http://localhost:7861';
+axios.defaults.baseURL = 'http://127.0.0.1:6006';
 
 const app = createApp(App);
 

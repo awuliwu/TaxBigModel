@@ -16,12 +16,10 @@
   </div>
 </template>
 
-
-
 <script>
-
 import UserInputHistory from './UserInputHistory.vue';
 import ModelResponseHistory from './ModelResponseHistory.vue';
+
 export default {
   name: 'KnowledgeBase',
   components: {
@@ -29,7 +27,7 @@ export default {
     ModelResponseHistory,
   },
   props: {
-      selectedKnowledgeBase: String // 接收从 SidebarComponent 传递来的选中的知识库名称
+    selectedKnowledgeBase: String // 接收从 SidebarComponent 传递来的选中的知识库名称
   },
   data() {
     return {
@@ -37,14 +35,11 @@ export default {
       history: [],
     };
   },
-
   watch: {
     history(newHistory) {
       this.$emit('update-history', newHistory); // 通过事件通知父组件更新 history
     }
   },
-
-
   methods: {
     async sendMessage() {
       if (this.userInput.trim() !== '') {
@@ -75,81 +70,84 @@ export default {
 
           // 如果返回的数据有前缀 "data: "，则移除它
           if (typeof jsonResponse === 'string' && jsonResponse.startsWith('data: ')) {
-              jsonResponse = jsonResponse.substring(5);
+            jsonResponse = jsonResponse.substring(5);
           }
 
           jsonResponse = JSON.parse(jsonResponse); // 解析JSON
 
           console.log(jsonResponse); // 检查解析后的数据结构
           if (jsonResponse && jsonResponse.answer) { // 根据实际返回的数据结构检查
-              const modelResponseText = jsonResponse.answer;
-              console.log("Model Response Text:", modelResponseText); // 检查 answer 字段
-              const modelResponse = { role: 'assistant', content: modelResponseText };
-              this.history.push(modelResponse); // 添加大模型回复到历史记录
-              this.$emit('update-history', modelResponse);
+            const modelResponseText = jsonResponse.answer;
+            console.log("Model Response Text:", modelResponseText); // 检查 answer 字段
+            const modelResponse = { role: 'assistant', content: modelResponseText };
+            this.history.push(modelResponse); // 添加大模型回复到历史记录
+            this.$emit('update-history', modelResponse);
           } else {
-              console.error("Parsed response data is missing 'answer' field:", jsonResponse);
+            console.error("Parsed response data is missing 'answer' field:", jsonResponse);
           }
         } catch (error) {
-            console.error("Error sending message:", error);
+          console.error("Error sending message:", error);
         }
       }
     },
-
   }
-
 };
 </script>
 
-<style>
-
+<style scoped>
 .main-content {
   flex: 1;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  //background-color: #222; /* 暗色背景 */
-  height: 100vh;
+  height: 100vh; /* 页面高度 */
   overflow: auto;
+  background-color: rgba(255, 255, 255, 0.5) !important; /* 透明白色背景 */
+  border-radius: 15px !important; /* 圆角 */
+  margin: 0 20px 20px 20px !important; /* 取消上间距，保留其他间距 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
 }
 
 .history {
   display: flex;
   flex-direction: column;
-  margin-bottom: auto;
+  margin-bottom: auto !important;
 }
 
 .input-area {
-  margin-top: auto;
-  display: flex;
-  justify-content: center; /* 居中输入区 */
+  margin-top: auto !important;
+  display: flex !important;
+  justify-content: center !important; /* 居中输入区 */
 }
 
 .input-form {
-  display: flex;
-  width: 60%; /* 输入区占main content的60% */
+  display: flex !important;
+  width: 100% !important; /* 输入区占main content的100% */
+  max-width: 800px !important; /* 限制输入区的最大宽度 */
 }
 
 .message-input {
-  flex: 1;
-  padding: 15px;
-  background-color: #333;
-  color: white;
-  border: none;
-  border-radius: 20px; /* 圆角样式 */
-  margin-right: 5px;
+  flex: 1 !important;
+  padding: 15px !important;
+  background-color: rgba(255, 255, 255, 0.9) !important; /* 透明白色背景 */
+  color: #333 !important;
+  border: 1px solid #ccc !important;
+  border-radius: 20px !important; /* 圆角样式 */
+  margin-right: 5px !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
 }
 
 .send-button {
-  padding: 10px 15px;
-  background-color: #444;
-  color: white;
-  border: none;
-  border-radius: 50%; /* 发送按钮圆形样式 */
-  cursor: pointer;
+  padding: 10px 15px !important;
+  background-color: #4CAF50 !important; /* 按钮背景色 */
+  color: white !important;
+  border: none !important;
+  border-radius: 50% !important; /* 发送按钮圆形样式 */
+  cursor: pointer !important;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
 }
 
 .send-button:hover {
-  background-color: #555;
+  background-color: #45a049 !important;
 }
 </style>

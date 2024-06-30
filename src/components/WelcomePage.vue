@@ -20,7 +20,7 @@ export default {
   background-color: rgba(255, 255, 255, 0.5); /* 透明白色背景 */
   border-radius: 15px; /* 圆角 */
   padding: 20px;
-  margin: 0; /* 去掉默认边距 */
+  margin: 0 20px 20px 20px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
 }
 

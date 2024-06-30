@@ -140,7 +140,9 @@ export default {
 
 <style>
 .model-dialogue {
-    display: flex;
+  display: flex;
+  align-items: center;
+  margin: 10px 0; /* 增加上下间距 */
 }
 
 .model-response-container {
@@ -149,18 +151,19 @@ export default {
 }
 
 .model-response-history {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin-right: auto; /* 向左对齐 */
-    max-width: 75%; /* 最大宽度不超过容器的3/4 */
-    width: fit-content; /* 宽度根据内容调整，但不超过最大宽度 */
-    border: 1px solid #555;
-    border-radius: 15px; /* 添加圆角 */
-    background-color: #555; /* 轻色背景增加对比 */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影提升立体感 */
-    word-wrap: break-word; /* 允许长单词换行 */
-    overflow-wrap: break-word; /* 在必要时换行 */
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  margin-left: auto; /* 向右对齐 */
+  max-width: 75%; /* 最大宽度不超过容器的3/4 */
+  width: fit-content; /* 宽度根据内容调整，但不超过最大宽度 */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* 边框颜色调整为半透明白色 */
+  border-radius: 20px; /* 圆角增加柔和感 */
+  background-color: rgba(255, 255, 255, 0.7); /* 半透明白色背景 */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* 添加阴影提升立体感 */
+  word-wrap: break-word; /* 允许长单词换行 */
+  overflow-wrap: break-word; /* 在必要时换行 */
+  color: #333; /* 调整文字颜色 */
 }
 
 .reaction-buttons {
