@@ -1,7 +1,7 @@
 <template>
   <div class="user-dialogue">
     <div class="user-input-history">
-      <div>
+      <div class="text-content">
         {{ input }}
       </div>
     </div>
@@ -22,7 +22,6 @@ export default {
 .user-dialogue {
   display: flex;
   align-items: center;
-  margin: 10px 0; /* 增加上下间距 */
 }
 
 .user-input-history {
@@ -36,9 +35,15 @@ export default {
   border-radius: 20px; /* 圆角增加柔和感 */
   background-color: rgba(144, 238, 144, 0.7); /* 半透明淡绿色背景 */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* 添加阴影提升立体感 */
+  color: #333; /* 调整文字颜色 */
   word-wrap: break-word; /* 允许长单词换行 */
   overflow-wrap: break-word; /* 在必要时换行 */
-  color: #333; /* 调整文字颜色 */
+}
+
+.text-content {
+  white-space: normal; /* 确保文本内容自动换行 */
+  word-break: break-all; /* 强制长单词换行 */
+  line-height: 1.2; /* 调整行高，缩小行间距 */
 }
 
 .avatar {

@@ -94,53 +94,62 @@ export default {
   display: flex;
   flex-direction: column;
   height: 100vh; /* 页面高度 */
-  overflow: auto;
+  overflow: hidden;
   background-color: rgba(255, 255, 255, 0.5) !important; /* 透明白色背景 */
   border-radius: 15px !important; /* 圆角 */
   margin: 0 20px 20px 20px !important; /* 取消上间距，保留其他间距 */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
+  position: relative;
 }
 
 .history {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: auto !important;
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 70px; /* 为了腾出空间显示输入区 */
 }
 
 .input-area {
-  margin-top: auto !important;
-  display: flex !important;
-  justify-content: center !important; /* 居中输入区 */
+  position: absolute;
+  bottom: 20px; /* 距离底部一定距离 */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center; /* 居中输入区 */
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.5); /* 透明背景 */
+  border-radius: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
 }
 
 .input-form {
-  display: flex !important;
-  width: 100% !important; /* 输入区占main content的100% */
-  max-width: 800px !important; /* 限制输入区的最大宽度 */
+  display: flex;
+  width: 100%;
 }
 
 .message-input {
-  flex: 1 !important;
-  padding: 15px !important;
-  background-color: rgba(255, 255, 255, 0.9) !important; /* 透明白色背景 */
-  color: #333 !important;
-  border: 1px solid #ccc !important;
-  border-radius: 20px !important; /* 圆角样式 */
-  margin-right: 5px !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
+  flex: 1;
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.9); /* 透明白色背景 */
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 20px; /* 圆角样式 */
+  margin-right: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
 }
 
 .send-button {
-  padding: 10px 15px !important;
-  background-color: #4CAF50 !important; /* 按钮背景色 */
-  color: white !important;
-  border: none !important;
-  border-radius: 50% !important; /* 发送按钮圆形样式 */
-  cursor: pointer !important;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important; /* 轻微阴影效果 */
+  padding: 10px 15px;
+  background-color: #4CAF50; /* 按钮背景色 */
+  color: white;
+  border: none;
+  border-radius: 50%; /* 发送按钮圆形样式 */
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* 轻微阴影效果 */
 }
 
 .send-button:hover {
-  background-color: #45a049 !important;
+  background-color: #45a049;
 }
 </style>

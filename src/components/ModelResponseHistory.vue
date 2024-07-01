@@ -142,19 +142,18 @@ export default {
 .model-dialogue {
   display: flex;
   align-items: center;
-  margin: 10px 0; /* 增加上下间距 */
 }
 
 .model-response-container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .model-response-history {
   display: flex;
   align-items: center;
   padding: 15px;
-  margin-left: auto; /* 向右对齐 */
+  margin-right: auto; /* 向右对齐 */
   max-width: 75%; /* 最大宽度不超过容器的3/4 */
   width: fit-content; /* 宽度根据内容调整，但不超过最大宽度 */
   border: 1px solid rgba(255, 255, 255, 0.3); /* 边框颜色调整为半透明白色 */
@@ -164,35 +163,36 @@ export default {
   word-wrap: break-word; /* 允许长单词换行 */
   overflow-wrap: break-word; /* 在必要时换行 */
   color: #333; /* 调整文字颜色 */
+  margin-bottom: 5px; /* 缩小两段对话之间的间距 */
 }
 
 .reaction-buttons {
-    display: flex;
-    gap: 10px;
-    margin-top: 10px;
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
 }
 
 .reaction-buttons button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .reaction-buttons .reaction-icon {
-    width: 24px; /* 调整图标的宽度 */
-    height: 24px; /* 调整图标的高度 */
-    margin-right: 5px; /* 图标和文字之间的间距 */
+  width: 24px; /* 调整图标的宽度 */
+  height: 24px; /* 调整图标的高度 */
+  margin-right: 5px; /* 图标和文字之间的间距 */
 }
 
 .avatar {
-    width: 50px; /* 调整头像大小 */
-    height: 50px; /* 调整头像大小 */
-    border-radius: 50%; /* 圆形头像 */
-    margin-right: 10px; /* 保持原有间距 */
-    margin-left: 10px;
-    object-fit: cover; /* 确保图片内容被正确裁剪填充 */
+  width: 50px; /* 调整头像大小 */
+  height: 50px; /* 调整头像大小 */
+  border-radius: 50%; /* 圆形头像 */
+  margin-right: 10px; /* 保持原有间距 */
+  margin-left: 10px;
+  object-fit: cover; /* 确保图片内容被正确裁剪填充 */
 }
 
 .feedback-section {
